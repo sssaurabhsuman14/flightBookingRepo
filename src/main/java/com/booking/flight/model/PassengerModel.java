@@ -7,7 +7,7 @@ public class PassengerModel {
 	private String passengerName;
 	private Integer passengerAge;
 	private String passengerGender;
-	private Long bookingId;
+
 	public String getPassengerName() {
 		return passengerName;
 	}
@@ -26,18 +26,13 @@ public class PassengerModel {
 	public void setPassengerGender(String passengerGender) {
 		this.passengerGender = passengerGender;
 	}
-	public Long getBookingId() {
-		return bookingId;
-	}
-	public void setBookingId(Long bookingId) {
-		this.bookingId = bookingId;
-	}
-	public PassengerModel(String passengerName, Integer passengerAge, String passengerGender, Long bookingId) {
+
+	public PassengerModel(String passengerName, Integer passengerAge, String passengerGender) {
 		super();
 		this.passengerName = passengerName;
 		this.passengerAge = passengerAge;
 		this.passengerGender = passengerGender;
-		this.bookingId = bookingId;
+
 	}
 	public PassengerModel() {
 		super();

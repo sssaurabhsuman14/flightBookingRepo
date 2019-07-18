@@ -1,15 +1,19 @@
 package com.booking.flight.entity;
 
+
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name= "passerner")
+@Table(name= "passenger")
 public class Passenger {
 	
 	@Id
@@ -26,10 +30,8 @@ public class Passenger {
 	@Column(name="passenger_gender", nullable = false)
 	private String passengerGender;
 	
-	@Column(name="booking_id", nullable = false)
-	private Long bookingId;
-	
-	@ManyToOne
+	@OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "booking_id")
 	Booking booking;
 
 	public Long getPassengerId() {
@@ -64,14 +66,6 @@ public class Passenger {
 		this.passengerGender = passengerGender;
 	}
 
-	public Long getBookingId() {
-		return bookingId;
-	}
-
-	public void setBookingId(Long bookingId) {
-		this.bookingId = bookingId;
-	}
-	
 
 	public Booking getBooking() {
 		return booking;
@@ -81,14 +75,16 @@ public class Passenger {
 		this.booking = booking;
 	}
 
+	
+
 	public Passenger(Long passengerId, String passengerName, Integer passengerAge, String passengerGender,
-			Long bookingId) {
+			Booking booking) {
 		super();
 		this.passengerId = passengerId;
 		PassengerName = passengerName;
 		this.passengerAge = passengerAge;
 		this.passengerGender = passengerGender;
-		this.bookingId = bookingId;
+		this.booking = booking;
 	}
 
 	public Passenger() {

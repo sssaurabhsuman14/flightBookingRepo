@@ -15,7 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.booking.flight.entity.Booking;
 import com.booking.flight.entity.Flight;
 import com.booking.flight.entity.Passenger;
+import com.booking.flight.model.PassengerModel;
+import com.booking.flight.service.BookingService;
 import com.booking.flight.service.FlightService;
+import com.booking.flight.validation.FlightNotAvailableException;
+import com.booking.flight.validation.UserNotFoundException;
 
 @RestController
 @RequestMapping("/booking")
@@ -23,17 +27,22 @@ public class BookingController {
 
 	@Autowired
 	FlightService flightService;
+	
+	@Autowired
+	BookingService bookingService;
 
 	@PostMapping("/tickets")
-	public ResponseEntity<?> doFlightBooking(@RequestParam(value="flightId") Long flightId, @RequestParam(value="userId") Long userId, @RequestBody List<Passenger> passengerList){
+	public ResponseEntity<?> doFlightBooking(@RequestParam(value="flightId") Long flightId, @RequestParam(value="userId") Long userId, @RequestBody List<PassengerModel> passengerList){
 
-		Booking booking = new Booking();
+		Booking booking = new Booking(); 
 
-		Optional<Flight> flight = flightService.getFlight(flightId);
-
-		if(flight.get().getAvailableSeats()> passengerList.size()) {
-			//call service method
-		}
+			try {
+				booking = bookingService.doFlightBooking(userId, flightId, passengerList);
+			} 
+			catch (FlightNotAvailableException | UserNotFoundException e) {
+				return new ResponseEntity<>("Invalid Operation "+e.getMessage(),HttpStatus.BAD_REQUEST);
+			}
+			
 
 		return new ResponseEntity<>(booking,HttpStatus.OK);
 	}

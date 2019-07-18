@@ -4,12 +4,15 @@ import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -24,12 +27,6 @@ public class Booking {
 	@Column(name = "BOOKING_NUMBER", nullable = false)
 	private Integer bookingNumber;
 
-	@Column(name = "FLIGHT_ID", nullable = false)
-	private Long flightId;
-
-	@Column(name = "USER_ID", nullable = false)
-	private Long userId;
-
 	@Column(name = "BOOKING_DATE", nullable = false)
 	private LocalDate bookingDate;
 
@@ -39,9 +36,31 @@ public class Booking {
 	@Column(name = "TOTAL_FARE", nullable = false)
 	private Double totalFare;
 	
+	@OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
+	User user;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "flight_id")
+	Flight flight;
+	
 	@OneToMany(mappedBy = "booking")
 	List<Passenger> passengers;
 
+	
+	
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
+	}
+	public Flight getFlight() {
+		return flight;
+	}
+	public void setFlight(Flight flight) {
+		this.flight = flight;
+	}
 	public Long getBookingId() {
 		return bookingId;
 	}
@@ -54,18 +73,7 @@ public class Booking {
 	public void setBookingNumber(Integer bookingNumber) {
 		this.bookingNumber = bookingNumber;
 	}
-	public Long getFlightId() {
-		return flightId;
-	}
-	public void setFlightId(Long flightId) {
-		this.flightId = flightId;
-	}
-	public Long getUserId() {
-		return userId;
-	}
-	public void setUserId(Long userId) {
-		this.userId = userId;
-	}
+
 	public LocalDate getBookingDate() {
 		return bookingDate;
 	}
@@ -92,20 +100,22 @@ public class Booking {
 	public void setPassengers(List<Passenger> passengers) {
 		this.passengers = passengers;
 	}
-	public Booking(Long bookingId, Integer bookingNumber, Long flightId, Long userId, LocalDate bookingDate,
-			Integer seatBooked, Double totalFare) {
+	public Booking(Long bookingId, Integer bookingNumber, LocalDate bookingDate, Integer seatBooked, Double totalFare,
+			User user, Flight flight, List<Passenger> passengers) {
 		super();
 		this.bookingId = bookingId;
 		this.bookingNumber = bookingNumber;
-		this.flightId = flightId;
-		this.userId = userId;
 		this.bookingDate = bookingDate;
 		this.seatBooked = seatBooked;
 		this.totalFare = totalFare;
+		this.user = user;
+		this.flight = flight;
+		this.passengers = passengers;
 	}
-
 	public Booking() {
-
+		super();
 	}
-
+	
+	
+	
 }

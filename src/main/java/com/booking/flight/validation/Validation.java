@@ -10,7 +10,7 @@ public class Validation {
 	
 	public boolean validateFlightByAvailableSeats(Integer availableSeats , Integer requestedSeats) {
 				
-	if(availableSeats !=  null && requestedSeats != null && availableSeats <= requestedSeats) {
+	if(availableSeats !=  null && requestedSeats != null && availableSeats >= requestedSeats) {
 		return true;
 	}
 		return false;
