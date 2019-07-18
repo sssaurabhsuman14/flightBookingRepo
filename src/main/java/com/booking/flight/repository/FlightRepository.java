@@ -12,5 +12,10 @@ import com.booking.flight.entity.Flight;
 public interface FlightRepository extends JpaRepository<Flight, Long>{
 
 	public Optional<List<Flight>>findBySourceAndDestination(String source,String destinaton);
-	
+
+	public List<Flight> findByOrderByFareAsc();
+
+	public List<Flight> findByOrderByDepartureAsc();
+
+
 }
