@@ -12,43 +12,20 @@ import java.util.Optional;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import com.booking.flight.entity.Flight;
 import com.booking.flight.model.FlightModel;
 import com.booking.flight.repository.FlightRepository;
+import com.booking.flight.validation.FlightNotAvailableException;
 
 @Service
-public class FlightService implements Comparable{
+public class FlightService
+{
 
 	@Autowired
 	FlightRepository flightRepository;
 
-	public List<Flight> searchFlights(FlightModel model){
-
-		String source = model.getSource();
-
-		String destination = model.getDestination();		
-
-		//need to change DTO to entity
-
-		Flight flight =  new Flight();
-
-		Optional<List<Flight>> flights = flightRepository.findBySourceAndDestination(source, destination);
-
-
-		if(flights.isPresent())
-		{
-			List<FlightModel> models = new ArrayList<FlightModel>();
-			BeanUtils.copyProperties(flights.get(), models);
-
-
-			return flights.get();
-		}			
-		else {
-			return new ArrayList<Flight>();
-		}
-
-	}
 
 
 	/*
@@ -79,45 +56,43 @@ public class FlightService implements Comparable{
 	 * return model; }
 	 */
 
-	public List<Flight> filterFlights(List<Flight> flights, String flightSortBy){
-		Map travelTimes = new HashMap();
-		List sortedFlights = new ArrayList();
-		if (flightSortBy == "travelTime") {
-			travelTimes = this.travelTimeCalculator(flights);
+
+	
+	public List<Flight> searchFlights(FlightModel model) throws FlightNotAvailableException{
+		
+		
+		List<Flight> flightList = new ArrayList<Flight>();
+
+		Optional<List<Flight>> flights = filterFlights(model,model.getFlightSortBy());
+		
+		boolean isFlightList = flights.isPresent();
+		
+		if(isFlightList)
+		{
+			flightList = flights.get();
+			System.out.println(flightList);
 		}
+		else
+		{
+			throw new FlightNotAvailableException("No Flights Available");
+		}
+		
+		return flightList;
+	
+	}
+
+	private Optional<List<Flight>> filterFlights(FlightModel model, String flightSortBy) {
+		
+		Optional<List<Flight>> flightList = null;
+		
 		switch(flightSortBy)
 		{
-		case "departure":
-			sortedFlights = flightRepository.findByOrderByDepartureAsc();
-
+		case "fare":
+			flightList = flightRepository.findBySourceAndDestinationOrderByFareAsc(model.getSource(), model.getDestination());
 			break;
-
-		case "travelTime":
-			// TODO: need to look in this				
-
-			break;
-
-		default:
-			sortedFlights = flightRepository.findByOrderByFareAsc();
 
 		}
 
-		return sortedFlights;
-
-	}
-
-	public Map travelTimeCalculator(List<Flight> flights) {
-		Map travelTimes = new HashMap();
-		for(Flight flight: flights) {
-			int time = Integer.parseInt(flight.getDeparture())- Integer.parseInt(flight.getArrival());
-			travelTimes.put(flight.getFlightId(), time);
-		}
-		return travelTimes;
-	}
-
-	@Override
-	public int compareTo(Object arg0) {
-		// TODO Auto-generated method stub
-		return 0;
+		return flightList;
 	}
 }

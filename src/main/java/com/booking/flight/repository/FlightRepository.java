@@ -14,8 +14,12 @@ public interface FlightRepository extends JpaRepository<Flight, Long>{
 	public Optional<List<Flight>>findBySourceAndDestination(String source,String destinaton);
 
 	public List<Flight> findByOrderByFareAsc();
+	
 
-	public List<Flight> findByOrderByDepartureAsc();
+	public Optional<List<Flight>> findBySourceAndDestinationOrderByFareAsc(String source, String destination);
 
-
+	
+	public Optional<List<Flight>> findBySource(String source);
+	
+	
 }
