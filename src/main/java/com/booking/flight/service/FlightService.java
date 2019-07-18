@@ -95,4 +95,10 @@ public class FlightService
 
 		return flightList;
 	}
+	
+	public Optional<Flight> getFlight (Long flightId) {
+		Optional<Flight> flight;
+		flight = flightRepository.findById(flightId);
+		return flight;
+	}
 }
