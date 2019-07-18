@@ -14,7 +14,7 @@ public class UserService {
 	@Autowired
 	UserRepository userRepository;
 	
-	public String validateUser(String userName, String password) throws Exception{
+	public String loginUser(String userName, String password) throws Exception{
 		
 		User loginUser = userRepository.findByUserNameAndUserPassword(userName, password);
 		

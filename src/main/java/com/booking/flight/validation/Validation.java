@@ -16,4 +16,13 @@ public class Validation {
 		return false;
 	}
 
+	
+	public boolean validateUser(String userName , String password) {
+		
+		if(userName != null && password != null) {
+			return true;
+		}
+		
+		return false;
+	}
 }
