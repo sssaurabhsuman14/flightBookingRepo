@@ -1,16 +1,7 @@
-package com.booking.flight.entity;
+package com.booking.fight.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+public class FlightModel {
 
-@Entity
-public class Flight {
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long flightId;
 	private Integer flightNumber;
 	private String source;
 	private String destination;
@@ -19,13 +10,7 @@ public class Flight {
 	private Integer totalSeats;
 	private Integer availableSeats;
 	private Integer fare;
-
-	public Long getFlightId() {
-		return flightId;
-	}
-	public void setFlightId(Long flightId) {
-		this.flightId = flightId;
-	}
+	private String flightSortBy;
 	public Integer getFlightNumber() {
 		return flightNumber;
 	}
@@ -74,10 +59,15 @@ public class Flight {
 	public void setFare(Integer fare) {
 		this.fare = fare;
 	}
-	public Flight(Long flightId, Integer flightNumber, String source, String destination, String departure,
-			String arrival, Integer totalSeats, Integer availableSeats, Integer fare) {
+	public String getFlightSortBy() {
+		return flightSortBy;
+	}
+	public void setFlightSortBy(String flightSortBy) {
+		this.flightSortBy = flightSortBy;
+	}
+	public FlightModel(Integer flightNumber, String source, String destination, String departure, String arrival,
+			Integer totalSeats, Integer availableSeats, Integer fare, String flightSortBy) {
 		super();
-		this.flightId = flightId;
 		this.flightNumber = flightNumber;
 		this.source = source;
 		this.destination = destination;
@@ -86,9 +76,11 @@ public class Flight {
 		this.totalSeats = totalSeats;
 		this.availableSeats = availableSeats;
 		this.fare = fare;
+		this.flightSortBy = flightSortBy;
 	}
 
-	public Flight() {
+
+	public FlightModel() {
 
 	}
 }
