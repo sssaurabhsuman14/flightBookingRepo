@@ -26,14 +26,17 @@ public class LoginController {
 			@RequestParam(value = "password") String password) throws Exception {
 		try {
 			if (validation.validateUser(userName, password)) {
-				userService.loginUser(userName, password);
+
+				new ResponseEntity<>(userService.loginUser(userName, password), HttpStatus.OK);
+
 			} else {
 				return new ResponseEntity<String>("username/password cannot be empty", HttpStatus.NO_CONTENT);
 			}
 		} catch (Exception e) {
 			return new ResponseEntity<String>("Invalid Credential : " + e.getMessage(), HttpStatus.UNAUTHORIZED);
+
 		}
-		return new ResponseEntity<String>("Success", HttpStatus.OK);
+		return new ResponseEntity<String>("failure", HttpStatus.BAD_REQUEST);
 
 	}
 
