@@ -63,28 +63,9 @@ public class BookingService
 			booking.setUserId(userId);
 			booking.setSeatBooked(passengers.size());
 			booking.setTotalFare(totalFare);
+			booking.setPassengers(passengers);
 			
 			booked=bookingrepository.save(booking);
-			// TODO: Need to save passenger entity
-			
-			/*if(null !=booked)
-			{
-					Passenger passenger=new Passenger();
-					
-					passenger.setBookingId(booked.getBookingId());
-					passenger.setPassengerAge(passengerAge);
-					passenger.setPassengerGender(passengerGender);
-					passenger.setPassengerId(passengerId);
-					passenger.setPassengerName(passengerName);
-					
-			}
-			
-		
-			*/
-			
-			
-			
-			
 		}
 		return booked;
 		

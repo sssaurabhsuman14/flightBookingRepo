@@ -1,11 +1,16 @@
 package com.booking.flight.entity;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.ManyToAny;
 
 @Entity
 @Table(name= "passerner")
@@ -27,6 +32,9 @@ public class Passenger {
 	
 	@Column(name="booking_id", nullable = false)
 	private Long bookingId;
+	
+	@ManyToOne
+	Booking booking;
 
 	public Long getPassengerId() {
 		return passengerId;
@@ -66,6 +74,15 @@ public class Passenger {
 
 	public void setBookingId(Long bookingId) {
 		this.bookingId = bookingId;
+	}
+	
+
+	public Booking getBooking() {
+		return booking;
+	}
+
+	public void setBooking(Booking booking) {
+		this.booking = booking;
 	}
 
 	public Passenger(Long passengerId, String passengerName, Integer passengerAge, String passengerGender,

@@ -2,12 +2,14 @@ package com.booking.flight.entity;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -36,6 +38,9 @@ public class Booking {
 
 	@Column(name = "TOTAL_FARE", nullable = false)
 	private Double totalFare;
+	
+	@OneToMany(mappedBy = "booking")
+	List<Passenger> passengers;
 
 	public Long getBookingId() {
 		return bookingId;
@@ -78,6 +83,14 @@ public class Booking {
 	}
 	public void setTotalFare(Double totalFare) {
 		this.totalFare = totalFare;
+	}
+	
+	
+	public List<Passenger> getPassengers() {
+		return passengers;
+	}
+	public void setPassengers(List<Passenger> passengers) {
+		this.passengers = passengers;
 	}
 	public Booking(Long bookingId, Integer bookingNumber, Long flightId, Long userId, LocalDate bookingDate,
 			Integer seatBooked, Double totalFare) {
