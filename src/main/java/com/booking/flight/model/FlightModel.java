@@ -1,5 +1,7 @@
 package com.booking.flight.model;
 
+import java.util.Date;
+
 public class FlightModel {
 
 	private Integer flightNumber;
@@ -11,8 +13,9 @@ public class FlightModel {
 	private Integer availableSeats;
 	private Integer fare;
 	private String flightSortBy;
-	
-	
+	private Date flightDate;
+
+
 	public Integer getFlightNumber() {
 		return flightNumber;
 	}
@@ -67,8 +70,10 @@ public class FlightModel {
 	public void setFlightSortBy(String flightSortBy) {
 		this.flightSortBy = flightSortBy;
 	}
+
+
 	public FlightModel(Integer flightNumber, String source, String destination, String departure, String arrival,
-			Integer totalSeats, Integer availableSeats, Integer fare, String flightSortBy) {
+			Integer totalSeats, Integer availableSeats, Integer fare, String flightSortBy, Date flightDate) {
 		super();
 		this.flightNumber = flightNumber;
 		this.source = source;
@@ -79,9 +84,8 @@ public class FlightModel {
 		this.availableSeats = availableSeats;
 		this.fare = fare;
 		this.flightSortBy = flightSortBy;
+		this.flightDate = flightDate;
 	}
-
-
 	public FlightModel() {
 
 	}
