@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.booking.flight.entity.Flight;
 import com.booking.flight.model.FlightModel;
+import com.booking.flight.model.FlightModel;
+import com.booking.flight.entity.Flight;
 import com.booking.flight.service.FlightService;
 import com.booking.flight.validation.InvalidFlightDetailsException;
 
