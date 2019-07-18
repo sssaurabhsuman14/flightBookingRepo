@@ -2,6 +2,7 @@ package com.booking.flight.service;
 
 import java.sql.Time;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -25,8 +26,6 @@ public class FlightService
 
 	@Autowired
 	FlightRepository flightRepository;
-
-
 
 	/*
 	 * FlightModel toModel(Flight flight) {
@@ -60,8 +59,10 @@ public class FlightService
 	
 	public List<Flight> searchFlights(FlightModel model) throws FlightNotAvailableException{
 		
-		
+
 		List<Flight> flightList = new ArrayList<Flight>();
+		
+		List<Flight> flightListToday = new ArrayList<Flight>();
 
 		Optional<List<Flight>> flights = filterFlights(model,model.getFlightSortBy());
 		
@@ -77,23 +78,44 @@ public class FlightService
 			throw new FlightNotAvailableException("No Flights Available");
 		}
 		
-		return flightList;
+		if(model.getFlightDate().isEqual(LocalDate.now()))
+		{
+			for(Flight flight : flightList)
+			{
+				int compareValue = LocalTime.now().compareTo(flight.getDeparture());
+				if(compareValue < 1)
+				{
+							System.out.println(flight);
+							flightListToday.add(flight);
+				}
+				
+			}				
+		}
+		else
+		{
+			flightListToday = flightList;
+		}
+		
+		return flightListToday;
 	
 	}
 
 	private Optional<List<Flight>> filterFlights(FlightModel model, String flightSortBy) {
 		
-		Optional<List<Flight>> flightList = null;
-		
 		switch(flightSortBy)
 		{
-		case "fare":
-			flightList = flightRepository.findBySourceAndDestinationOrderByFareAsc(model.getSource(), model.getDestination());
-			break;
+			case "fare":
+			return flightRepository.findBySourceAndDestinationOrderByFareAsc(model.getSource(), model.getDestination());
+			
+			case "departure":
+				return flightRepository.findBySourceAndDestinationOrderByDepartureAsc(model.getSource(), model.getDestination());
+				
+			case "seats":
+				return flightRepository.findBySourceAndDestinationOrderByAvailableSeatsDesc(model.getSource(), model.getDestination());
 
 		}
 
-		return flightList;
+		return null;
 	}
 	
 	public Optional<Flight> getFlight (Long flightId) {

@@ -1,5 +1,6 @@
 package com.booking.flight.controller;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,7 +43,7 @@ public class FlightController {
 
 		} 
 		catch (InvalidFlightDetailsException | FlightNotAvailableException e) {
-			return new ResponseEntity<>("Invalid Entry : ",HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>("Invalid Entry : "+e.getMessage(),HttpStatus.BAD_REQUEST);
 		}
 
 		return new ResponseEntity<>(flights,HttpStatus.OK);
@@ -59,6 +60,9 @@ public class FlightController {
 
 		if(StringUtils.isEmpty(flightModel.getFlightDate()))
 			throw new InvalidFlightDetailsException(ERR_MSG+" Flight Date");
+		
+		if(flightModel.getFlightDate().isBefore(LocalDate.now()))
+			throw new InvalidFlightDetailsException(" You have enter Invalid Flight Date");
 
 
 	}

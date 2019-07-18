@@ -1,5 +1,7 @@
 package com.booking.flight.entity;
 
+import java.time.LocalTime;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -26,10 +28,10 @@ public class Flight {
 	private String destination;
 
 	@Column(name = "DEPARTURE", nullable=false)
-	private String departure;
+	private LocalTime departure;
 
 	@Column(name = "ARRIVAL", nullable=false)
-	private String arrival;
+	private LocalTime arrival;
 
 	@Column(name = "TOTAL_SEATS", nullable=false)
 	private Integer totalSeats;
@@ -64,16 +66,17 @@ public class Flight {
 	public void setDestination(String destination) {
 		this.destination = destination;
 	}
-	public String getDeparture() {
+	
+	public LocalTime getDeparture() {
 		return departure;
 	}
-	public void setDeparture(String departure) {
+	public void setDeparture(LocalTime departure) {
 		this.departure = departure;
 	}
-	public String getArrival() {
+	public LocalTime getArrival() {
 		return arrival;
 	}
-	public void setArrival(String arrival) {
+	public void setArrival(LocalTime arrival) {
 		this.arrival = arrival;
 	}
 	public Integer getTotalSeats() {
@@ -94,9 +97,16 @@ public class Flight {
 	public void setFare(Double fare) {
 		this.fare = fare;
 	}
+	@Override
+	public String toString() {
+		return "Flight [flightId=" + flightId + ", flightNumber=" + flightNumber + ", source=" + source
+				+ ", destination=" + destination + ", departure=" + departure + ", arrival=" + arrival + ", totalSeats="
+				+ totalSeats + ", availableSeats=" + availableSeats + ", fare=" + fare + "]";
+	}
+	public Flight(Long flightId, Integer flightNumber, String source, String destination, LocalTime departure,
+			LocalTime arrival, Integer totalSeats, Integer availableSeats, Double fare) {
 
-	public Flight(Long flightId, Integer flightNumber, String source, String destination, String departure,
-			String arrival, Integer totalSeats, Integer availableSeats, Double fare) {
+	
 		super();
 		this.flightId = flightId;
 		this.flightNumber = flightNumber;
@@ -108,15 +118,10 @@ public class Flight {
 		this.availableSeats = availableSeats;
 		this.fare = fare;
 	}
-
 	public Flight() {
+		super();
+	}
 
-	}
-	@Override
-	public String toString() {
-		return "Flight [flightId=" + flightId + ", flightNumber=" + flightNumber + ", source=" + source
-				+ ", destination=" + destination + ", departure=" + departure + ", arrival=" + arrival + ", totalSeats="
-				+ totalSeats + ", availableSeats=" + availableSeats + ", fare=" + fare + "]";
-	}
+	
 
 }

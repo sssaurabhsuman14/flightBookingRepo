@@ -1,6 +1,7 @@
 package com.booking.flight.model;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 
 public class FlightModel {
@@ -8,8 +9,8 @@ public class FlightModel {
 	private Integer flightNumber;
 	private String source;
 	private String destination;
-	private String departure;
-	private String arrival;
+	private LocalTime departure;
+	private LocalTime arrival;
 	private Integer totalSeats;
 	private Integer availableSeats;
 	private Integer fare;
@@ -42,16 +43,16 @@ public class FlightModel {
 	public void setDestination(String destination) {
 		this.destination = destination;
 	}
-	public String getDeparture() {
+	public LocalTime getDeparture() {
 		return departure;
 	}
-	public void setDeparture(String departure) {
+	public void setDeparture(LocalTime departure) {
 		this.departure = departure;
 	}
-	public String getArrival() {
+	public LocalTime getArrival() {
 		return arrival;
 	}
-	public void setArrival(String arrival) {
+	public void setArrival(LocalTime arrival) {
 		this.arrival = arrival;
 	}
 	public Integer getTotalSeats() {
