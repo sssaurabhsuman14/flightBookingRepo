@@ -31,7 +31,7 @@ public class Booking {
 	private Date bookingDate;
 
 	@Column(name = "SEAT_BOOKED", nullable = false)
-	private String seatBooked;
+	private Integer seatBooked;
 
 	@Column(name = "TOTAL_FARE", nullable = false)
 	private Integer totalFare;
@@ -66,10 +66,10 @@ public class Booking {
 	public void setBookingDate(Date bookingDate) {
 		this.bookingDate = bookingDate;
 	}
-	public String getSeatBooked() {
+	public Integer getSeatBooked() {
 		return seatBooked;
 	}
-	public void setSeatBooked(String seatBooked) {
+	public void setSeatBooked(Integer seatBooked) {
 		this.seatBooked = seatBooked;
 	}
 	public Integer getTotalFare() {
@@ -79,7 +79,7 @@ public class Booking {
 		this.totalFare = totalFare;
 	}
 	public Booking(Long bookingId, Integer bookingNumber, Long flightId, Long userId, Date bookingDate,
-			String seatBooked, Integer totalFare) {
+			Integer seatBooked, Integer totalFare) {
 		super();
 		this.bookingId = bookingId;
 		this.bookingNumber = bookingNumber;
