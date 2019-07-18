@@ -23,16 +23,15 @@ public class FlightService implements Comparable{
 	@Autowired
 	FlightRepository flightRepository;
 
-	public List<FlightModel> searchFlights(FlightModel model){
+	public List<Flight> searchFlights(FlightModel model){
 
 		String source = model.getSource();
 
-		String destination = model.getDeparture();
+		String destination = model.getDestination();		
 
 		//need to change DTO to entity
 
 		Flight flight =  new Flight();
-		BeanUtils.copyProperties(model, flight);
 
 		Optional<List<Flight>> flights = flightRepository.findBySourceAndDestination(source, destination);
 
@@ -42,13 +41,43 @@ public class FlightService implements Comparable{
 			List<FlightModel> models = new ArrayList<FlightModel>();
 			BeanUtils.copyProperties(flights.get(), models);
 
-			return models;
+
+			return flights.get();
 		}			
 		else {
-			return new ArrayList<FlightModel>();
+			return new ArrayList<Flight>();
 		}
 
 	}
+
+
+	/*
+	 * FlightModel toModel(Flight flight) {
+	 * 
+	 * FlightModel model = new FlightModel(); model.setArrival(flight.getArrival());
+	 * model.setAvailableSeats(flight.getAvailableSeats());;
+	 * model.setDeparture(flight.getDeparture());
+	 * model.setDestination(flight.getDestination());
+	 * model.setFare(flight.getFare());
+	 * model.setFlightNumber(flight.getFlightNumber());
+	 * model.setSource(flight.getSource());
+	 * model.setTotalSeats(flight.getTotalSeats());
+	 * 
+	 * return model; }
+	 * 
+	 * Flight toEntity(FlightModel flight) {
+	 * 
+	 * Flight model = new Flight(); model.setArrival(flight.getArrival());
+	 * model.setAvailableSeats(flight.getAvailableSeats());;
+	 * model.setDeparture(flight.getDeparture());
+	 * model.setDestination(flight.getDestination());
+	 * model.setFare(flight.getFare());
+	 * model.setFlightNumber(flight.getFlightNumber());
+	 * model.setSource(flight.getSource());
+	 * model.setTotalSeats(flight.getTotalSeats());
+	 * 
+	 * return model; }
+	 */
 
 	public List<Flight> filterFlights(List<Flight> flights, String flightSortBy){
 		Map travelTimes = new HashMap();

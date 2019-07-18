@@ -94,21 +94,4 @@ public class Flight {
 	public void setFare(Integer fare) {
 		this.fare = fare;
 	}
-	public Flight(Long flightId, Integer flightNumber, String source, String destination, String departure,
-			String arrival, Integer totalSeats, Integer availableSeats, Integer fare) {
-		super();
-		this.flightId = flightId;
-		this.flightNumber = flightNumber;
-		this.source = source;
-		this.destination = destination;
-		this.departure = departure;
-		this.arrival = arrival;
-		this.totalSeats = totalSeats;
-		this.availableSeats = availableSeats;
-		this.fare = fare;
-	}
-
-	public Flight() {
-
-	}
 }
