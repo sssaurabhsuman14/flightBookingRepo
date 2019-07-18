@@ -1,4 +1,4 @@
-package com.booking.fight.model;
+package com.booking.flight.model;
 
 public class FlightModel {
 
@@ -11,6 +11,8 @@ public class FlightModel {
 	private Integer availableSeats;
 	private Integer fare;
 	private String flightSortBy;
+	
+	
 	public Integer getFlightNumber() {
 		return flightNumber;
 	}

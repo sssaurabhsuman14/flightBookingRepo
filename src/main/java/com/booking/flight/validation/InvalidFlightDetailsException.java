@@ -1,4 +1,4 @@
-package com.booking.fight.validation;
+package com.booking.flight.validation;
 
 public class InvalidFlightDetailsException extends Exception {
 

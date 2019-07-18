@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.booking.fight.model.FlightModel;
-import com.booking.fight.validation.InvalidFlightDetailsException;
 import com.booking.flight.entity.Flight;
+import com.booking.flight.model.FlightModel;
 import com.booking.flight.service.FlightService;
+import com.booking.flight.validation.InvalidFlightDetailsException;
 
 @RestController
 @RequestMapping("/flights")

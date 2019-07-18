@@ -9,8 +9,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.booking.fight.model.FlightModel;
 import com.booking.flight.entity.Flight;
+import com.booking.flight.model.FlightModel;
 import com.booking.flight.repository.FlightRepository;
 
 @Service
