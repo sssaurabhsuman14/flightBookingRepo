@@ -1,5 +1,6 @@
 package com.booking.flight.entity;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -28,13 +29,13 @@ public class Booking {
 	private Long userId;
 
 	@Column(name = "BOOKING_DATE", nullable = false)
-	private Date bookingDate;
+	private LocalDate bookingDate;
 
 	@Column(name = "SEAT_BOOKED", nullable = false)
 	private Integer seatBooked;
 
 	@Column(name = "TOTAL_FARE", nullable = false)
-	private Integer totalFare;
+	private Double totalFare;
 
 	public Long getBookingId() {
 		return bookingId;
@@ -60,10 +61,10 @@ public class Booking {
 	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
-	public Date getBookingDate() {
+	public LocalDate getBookingDate() {
 		return bookingDate;
 	}
-	public void setBookingDate(Date bookingDate) {
+	public void setBookingDate(LocalDate bookingDate) {
 		this.bookingDate = bookingDate;
 	}
 	public Integer getSeatBooked() {
@@ -72,14 +73,14 @@ public class Booking {
 	public void setSeatBooked(Integer seatBooked) {
 		this.seatBooked = seatBooked;
 	}
-	public Integer getTotalFare() {
+	public Double getTotalFare() {
 		return totalFare;
 	}
-	public void setTotalFare(Integer totalFare) {
+	public void setTotalFare(Double totalFare) {
 		this.totalFare = totalFare;
 	}
-	public Booking(Long bookingId, Integer bookingNumber, Long flightId, Long userId, Date bookingDate,
-			Integer seatBooked, Integer totalFare) {
+	public Booking(Long bookingId, Integer bookingNumber, Long flightId, Long userId, LocalDate bookingDate,
+			Integer seatBooked, Double totalFare) {
 		super();
 		this.bookingId = bookingId;
 		this.bookingNumber = bookingNumber;

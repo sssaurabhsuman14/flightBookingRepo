@@ -8,7 +8,7 @@ import com.booking.flight.repository.FlightRepository;
 @Component
 public class Validation {
 	
-	public boolean validateFlightByAvailableSeats(Long availableSeats , Long requestedSeats) {
+	public boolean validateFlightByAvailableSeats(Integer availableSeats , Integer requestedSeats) {
 				
 	if(availableSeats !=  null && requestedSeats != null && availableSeats <= requestedSeats) {
 		return true;

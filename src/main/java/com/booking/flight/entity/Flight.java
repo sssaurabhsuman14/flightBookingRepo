@@ -38,7 +38,7 @@ public class Flight {
 	private Integer availableSeats;
 
 	@Column(name = "FARE", nullable=false)
-	private Integer fare;
+	private Double fare;
 
 	public Long getFlightId() {
 		return flightId;
@@ -88,15 +88,15 @@ public class Flight {
 	public void setAvailableSeats(Integer availableSeats) {
 		this.availableSeats = availableSeats;
 	}
-	public Integer getFare() {
+	public Double getFare() {
 		return fare;
 	}
-	public void setFare(Integer fare) {
+	public void setFare(Double fare) {
 		this.fare = fare;
 	}
 
 	public Flight(Long flightId, Integer flightNumber, String source, String destination, String departure,
-			String arrival, Integer totalSeats, Integer availableSeats, Integer fare) {
+			String arrival, Integer totalSeats, Integer availableSeats, Double fare) {
 		super();
 		this.flightId = flightId;
 		this.flightNumber = flightNumber;
