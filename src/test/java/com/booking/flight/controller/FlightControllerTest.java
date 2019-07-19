@@ -1,5 +1,7 @@
 package com.booking.flight.controller;
 
+import static org.junit.Assert.assertEquals;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +25,8 @@ import com.booking.flight.entity.Flight;
 import com.booking.flight.model.FlightModel;
 import com.booking.flight.repository.FlightRepository;
 import com.booking.flight.service.FlightService;
+import com.booking.flight.utils.ObjectUtility;
+import com.booking.flight.validation.FlightNotAvailableException;
 
 @RunWith(MockitoJUnitRunner.class)
 @SpringBootTest
@@ -42,28 +46,10 @@ public class FlightControllerTest {
 	@Autowired
 	Flight flight = new Flight();
 	@Autowired
-	Optional<List<Flight>> flights = Optional.of(new ArrayList());
-
-
-
-	@Test
-	public void searchFlights()
-	{
-		createFlightModel();
-
-		createFlight();
-
-		Mockito.when(flightRepository.findBySourceAndDestinationOrderByFareAsc(flightModel.getSource(), flightModel.getFlightSortBy())).thenReturn( flights);
-
-		ResponseEntity responseEntity= new ResponseEntity(flights, HttpStatus.OK);
-
-		Assert.assertNotNull(flights);
-
-	}
-
+	List<Flight> flights =  new ArrayList<>();
 
 	@Before
-	public void createFlightModel() {
+	public void setUp() {
 
 
 		flightModel.setSource("pune");
@@ -71,19 +57,30 @@ public class FlightControllerTest {
 		flightModel.setFlightDate(LocalDate.now());
 		flightModel.setFlightSortBy("fare");
 
-	}
-
-	@Before 
-	public void createFlight() {
-
-
 		flight.setDestination("mumbai");
 		flight.setSource("pune");
+		flights.add(flight);
 
 	}
 
-	@Before
-	public void createFlights() {
-		flights.get().add(flight);
+	@Test
+	public void searchFlights() throws FlightNotAvailableException
+	{
+
+		Mockito.when(flightService.searchFlights(flightModel)).thenReturn(flights);
+
+		List<Flight> list = flightService.searchFlights(flightModel);
+
+		assertEquals(flights, list);
+		Assert.assertNotNull(flights);
+
+	}
+
+
+
+
+	public void addFlight() {
+
+
 	}
 }
