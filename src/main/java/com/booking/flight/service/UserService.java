@@ -25,8 +25,9 @@ public class UserService {
 		
 		User loginUser = userRepository.findByUserNameAndUserPassword(userName, password);
 		
-		if(loginUser!= null) {
-			return bookingRepository.findByUserId(loginUser.getUserId());
+		if(loginUser!= null) 
+		{
+			return bookingRepository.findByUser(loginUser);
 		}else {
 			throw new Exception("No user found !!!");
 		}

@@ -27,7 +27,7 @@ public class LoginController {
 		try {
 			if (validation.validateUser(userName, password)) {
 
-				new ResponseEntity<>(userService.loginUser(userName, password), HttpStatus.OK);
+				return new ResponseEntity<>(userService.loginUser(userName, password), HttpStatus.OK);
 
 			} else {
 				return new ResponseEntity<String>("username/password cannot be empty", HttpStatus.NO_CONTENT);
@@ -36,7 +36,6 @@ public class LoginController {
 			return new ResponseEntity<String>("Invalid Credential : " + e.getMessage(), HttpStatus.UNAUTHORIZED);
 
 		}
-		return new ResponseEntity<String>("failure", HttpStatus.BAD_REQUEST);
 
 	}
 

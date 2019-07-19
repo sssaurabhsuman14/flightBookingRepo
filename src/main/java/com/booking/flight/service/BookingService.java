@@ -92,7 +92,7 @@ public class BookingService
 			
 			booked=bookingrepository.save(booking);
 			
-			createPassenger(passengerList, booked);
+			//createPassenger(passengerList, booked);
 		}
 		else
 		{
