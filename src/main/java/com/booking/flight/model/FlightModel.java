@@ -22,6 +22,19 @@ public class FlightModel {
 
 
 	
+
+	public FlightModel(Integer flightNumber, String source, String destination, LocalTime departure, LocalTime arrival,
+			Integer totalSeats, Integer availableSeats, Double fare) {
+		super();
+		this.flightNumber = flightNumber;
+		this.source = source;
+		this.destination = destination;
+		this.departure = departure;
+		this.arrival = arrival;
+		this.totalSeats = totalSeats;
+		this.availableSeats = availableSeats;
+		this.fare = fare;
+	}
 	public Double getFare() {
 		return fare;
 	}

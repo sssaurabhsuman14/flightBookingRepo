@@ -42,7 +42,7 @@ public class FlightControllerTest {
 	FlightRepository flightRepository;
 
 	@Autowired
-	FlightModel flightModel = new FlightModel();
+	FlightModel flightModel;
 	@Autowired
 	Flight flight = new Flight();
 	@Autowired

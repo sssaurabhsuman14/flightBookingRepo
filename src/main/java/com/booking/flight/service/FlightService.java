@@ -149,8 +149,6 @@ public class FlightService
 }
 	public String requestToAddFlight(FlightModel flightModel, Long userId) throws InvalidFlightDetailsException, SQLException
 	{
-		
-		
 		if(ObjectUtils.isEmpty(flightModel))
 		{
 			throw new InvalidFlightDetailsException("You Have Enter Wrong Flight Details ");
