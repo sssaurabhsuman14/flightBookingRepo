@@ -26,7 +26,8 @@ import com.booking.flight.validation.Validation;
 public class BookingService 
 {
 	
-	@Autowired BookingRepository bookingrepository;
+	@Autowired 
+	BookingRepository bookingrepository;
 	
 	@Autowired PassengerRepository passengerrepository;
 	

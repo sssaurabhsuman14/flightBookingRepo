@@ -2,15 +2,23 @@ package com.booking.flight.utils;
 
 import java.util.Optional;
 
+import org.springframework.stereotype.Component;
 
+@Component
 public class OptionalUtils {
 
 	public static Object checkOptional(Optional<?> optionalObject) {
 		
+		Object object = null;
+		
 		if(optionalObject.isPresent())
-			return optionalObject.get();
+		{
+			object = optionalObject.get();
+			return object;
+		}
+			
 		else
-			return null;	
+			return object;	
 	}
 
 }

@@ -1,24 +1,21 @@
 package com.booking.flight.service;
 
 import java.sql.SQLException;
-import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
+
 import com.booking.flight.entity.Flight;
 import com.booking.flight.model.FlightModel;
 import com.booking.flight.repository.FlightRepository;
 import com.booking.flight.utils.ObjectUtility;
+import com.booking.flight.utils.OptionalUtils;
 import com.booking.flight.validation.FlightNotAvailableException;
 import com.booking.flight.validation.InvalidFlightDetailsException;
 
@@ -28,6 +25,9 @@ public class FlightService
 
 	@Autowired
 	FlightRepository flightRepository;
+	
+	@Autowired
+	OptionalUtils optionalUtils;
 
 	/*
 	 * FlightModel toModel(Flight flight) {
@@ -65,45 +65,51 @@ public class FlightService
 		List<Flight> flightList = new ArrayList<Flight>();
 		
 		List<Flight> flightListToday = new ArrayList<Flight>();
-
-		Optional<List<Flight>> flights = filterFlights(model,model.getFlightSortBy());
 		
-		boolean isFlightList = flights.isPresent();
+		if(model != null) {
 		
-		if(isFlightList)
-		{
-			flightList = flights.get();
-			System.out.println(flightList);
-		}
-		else
-		{
-			throw new FlightNotAvailableException("No Flights Available");
-		}
-		
-		if(model.getFlightDate().isEqual(LocalDate.now()))
-		{
-			for(Flight flight : flightList)
-			{
-				int compareValue = LocalTime.now().compareTo(flight.getDeparture());
-				if(compareValue < 1)
-				{
-							System.out.println(flight);
-							flightListToday.add(flight);
+			Optional<List<Flight>> flightsOptional = filterFlights(model,model.getFlightSortBy());
+			
+			flightList = (List<Flight>) OptionalUtils.checkOptional(flightsOptional);
+			 
+			List<Flight> availableFlights = new ArrayList<Flight>();
+			
+			for(Flight flight : flightList) {
+				if(flight.getAvailableSeats() > 0) {
+					availableFlights.add(flight);
 				}
 				
-			}				
+			}
+
+			if(ObjectUtils.isEmpty(availableFlights))
+			{
+				throw new FlightNotAvailableException("No Flights Available");
+			}
+
+			
+			if(model.getFlightDate().isEqual(LocalDate.now()))
+			{
+				for(Flight flight : availableFlights)
+				{
+					int compareValue = LocalTime.now().compareTo(flight.getDeparture());
+					if(compareValue < 1)
+					{
+								flightListToday.add(flight);
+					}
+					
+				}				
+			}
+			else
+			{
+				flightListToday = availableFlights;
+			}
 		}
-		else
-		{
-			flightListToday = flightList;
-		}
-		
 		return flightListToday;
 	
 	}
 
 	private Optional<List<Flight>> filterFlights(FlightModel model, String flightSortBy) {
-		
+		Optional<List<Flight>> optionalList = Optional.empty();
 		switch(flightSortBy)
 		{
 			case "fare":
@@ -117,7 +123,7 @@ public class FlightService
 
 		}
 
-		return null;
+		return optionalList;
 	}
 	
 	public Optional<Flight> getFlight (Long flightId) {
