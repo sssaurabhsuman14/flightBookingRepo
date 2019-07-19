@@ -55,7 +55,6 @@ public class BookingService
 		if(flightOptional.isPresent()) 
 		{
 			flight  = flightOptional.get();
-			//System.out.println("Flight : "+ flight);
 			isFlightByAvailableSeats = validation.validateFlightByAvailableSeats(flight.getAvailableSeats(),passengers.size());
 		}
 		else
@@ -68,7 +67,6 @@ public class BookingService
 		if(userOptional.isPresent()) 
 		{
 			user  = userOptional.get();
-			//System.out.println("User : "+ user);
 		}
 		else
 		{

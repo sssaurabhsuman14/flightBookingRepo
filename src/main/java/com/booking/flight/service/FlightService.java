@@ -123,4 +123,16 @@ public class FlightService
 		flight = flightRepository.findById(flightId);
 		return flight;
 	}
+	
+	public boolean updateFlight(Flight flight, Integer numberOfSeatsBooked) {
+		
+		if( flight != null) {
+			Integer updatedAvailableSeats = flight.getAvailableSeats() - numberOfSeatsBooked;
+			flight.setAvailableSeats(updatedAvailableSeats);
+			flightRepository.save(flight);
+		}
+		
+		
+		return false;
+	}
 }

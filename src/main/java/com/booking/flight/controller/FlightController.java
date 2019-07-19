@@ -31,7 +31,7 @@ public class FlightController {
 
 	private final static String ERR_MSG = " INVALID DATA, MISSING PARAMETER : ";
 
-	@PostMapping("/allFlights")
+	@PostMapping("/searchFlights")
 	public ResponseEntity<?> searchFlights(@RequestBody FlightModel model)
 	{
 		List<Flight> flights =  new ArrayList<>();
