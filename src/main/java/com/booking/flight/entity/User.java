@@ -10,26 +10,29 @@ import javax.persistence.Table;
 @Entity
 @Table(name="user")
 public class User {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "user_id", nullable=false)
 	private Long userId;
-	
+
 	@Column(name = "user_name", nullable=false)
 	private String userName;
-	
+
 	@Column(name = "user_password", nullable=false)
 	private String userPassword;
-	
+
 	@Column(name = "user_age", nullable=false)
 	private Integer userAge;
-	
+
 	@Column(name = "user_gender", nullable=false)
 	private String userGender;
-	
+
 	@Column(name = "user_adderss", nullable=false)
 	private String userAddress;
+
+	@Column(name = "role", nullable=false)
+	private String role;
 
 	public Long getUserId() {
 		return userId;
@@ -79,8 +82,16 @@ public class User {
 		this.userAddress = userAddress;
 	}
 
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
 	public User(Long userId, String userName, String userPassword, Integer userAge, String userGender,
-			String userAddress) {
+			String userAddress, String role) {
 		super();
 		this.userId = userId;
 		this.userName = userName;
@@ -88,14 +99,10 @@ public class User {
 		this.userAge = userAge;
 		this.userGender = userGender;
 		this.userAddress = userAddress;
+		this.role = role;
 	}
 
 	public User() {
 		super();
 	}
-
-	
-	
-	
-
 }
