@@ -1,6 +1,5 @@
 package com.booking.flight.controller;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,13 +12,18 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.booking.flight.entity.Flight;
+import com.booking.flight.entity.User;
 import com.booking.flight.model.FlightModel;
+import com.booking.flight.model.PassengerModel;
 import com.booking.flight.service.FlightService;
 import com.booking.flight.validation.FlightNotAvailableException;
 import com.booking.flight.validation.InvalidFlightDetailsException;
+import com.booking.flight.validation.UserNotFoundException;
+import com.booking.flight.validation.Validation;
 
 @RestController
 @RequestMapping("/flights")
@@ -28,6 +32,9 @@ public class FlightController {
 
 	@Autowired
 	FlightService flightService;
+
+	@Autowired
+	Validation validation;
 
 	private final static String ERR_MSG = " INVALID DATA, MISSING PARAMETER : ";
 
@@ -38,7 +45,7 @@ public class FlightController {
 
 		try 
 		{
-			validateFlightDetails(model);
+			validation.validateFlightDetails(model);
 			flights = flightService.searchFlights(model);
 
 		} 
@@ -50,21 +57,28 @@ public class FlightController {
 
 	}
 
-	private static void validateFlightDetails(FlightModel flightModel) throws InvalidFlightDetailsException
-	{
-		if(StringUtils.isEmpty(flightModel.getSource()))
-			throw new InvalidFlightDetailsException(ERR_MSG+" SOURCE");
 
-		if(StringUtils.isEmpty(flightModel.getDestination()))
-			throw new InvalidFlightDetailsException(ERR_MSG+" DESTINATION");
 
-		if(StringUtils.isEmpty(flightModel.getFlightDate()))
-			throw new InvalidFlightDetailsException(ERR_MSG+" Flight Date");
-		
-		if(flightModel.getFlightDate().isBefore(LocalDate.now()))
-			throw new InvalidFlightDetailsException(" You have enter Invalid Flight Date");
+	@PostMapping("/add")
+	public ResponseEntity<String> addFlight(@RequestParam(value="userId") Long userId, @RequestBody Flight flight) {
 
+		try {
+			validation.validateAddFlightDetails(flight);
+
+			if(validation.validateUserRole(userId))
+			{
+				String requestToAddFlight = flightService.requestToAddFlight(flight, userId);
+
+				return new ResponseEntity<String>(requestToAddFlight, HttpStatus.OK);
+
+			}
+			else
+			{
+				return new ResponseEntity<String>("You don't have rights to add new flight ", HttpStatus.OK);
+			}
+		} catch (InvalidFlightDetailsException | UserNotFoundException e) {
+			return new ResponseEntity<>("Invalid request : "+e.getMessage(),HttpStatus.BAD_REQUEST);
+		}
 
 	}
-
 }

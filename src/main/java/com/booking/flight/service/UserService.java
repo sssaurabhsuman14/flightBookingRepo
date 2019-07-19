@@ -2,6 +2,7 @@ package com.booking.flight.service;
 
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,6 +33,11 @@ public class UserService {
 			throw new Exception("No user found !!!");
 		}
 		
+	}
+
+	public Optional<User> getUserFromRepo(Long userId) {
+		Optional<User> user = userRepository.findById(userId);
+		return user;
 	}
 
 }

@@ -19,7 +19,11 @@ import org.springframework.util.StringUtils;
 import com.booking.flight.entity.Flight;
 import com.booking.flight.model.FlightModel;
 import com.booking.flight.repository.FlightRepository;
+<<<<<<< HEAD
 import com.booking.flight.utils.ObjectUtility;
+=======
+import com.booking.flight.utils.OptionalUtils;
+>>>>>>> 0eb7842b6c1b2097705b72614f7065770a3315f7
 import com.booking.flight.validation.FlightNotAvailableException;
 import com.booking.flight.validation.InvalidFlightDetailsException;
 
@@ -127,18 +131,21 @@ public class FlightService
 		return flight;
 	}
 	
-	public boolean updateFlight(Flight flight, Integer numberOfSeatsBooked) {
+	public boolean updateFlightByNumberOfSeats(Flight flight, Integer numberOfSeatsBooked) {
 		
 		if( flight != null) {
 			Integer updatedAvailableSeats = flight.getAvailableSeats() - numberOfSeatsBooked;
 			flight.setAvailableSeats(updatedAvailableSeats);
 			flightRepository.save(flight);
+			return true;
 		}
-		
-		
 		return false;
 	}
-	
+
+
+	public Optional<Flight> findById(Long fligtId) {
+		return flightRepository.findById(fligtId);
+}
 	public String requestToAddFlight(Flight flight, Long userId) throws InvalidFlightDetailsException
 	{
 		if(ObjectUtils.isEmpty(flight))

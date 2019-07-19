@@ -1,7 +1,6 @@
 package com.booking.flight.entity;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -121,6 +120,17 @@ public class Booking  {
 		super();
 	}
 	
+	public Booking(Long bookingId, Integer bookingNumber, LocalDate bookingDate, Integer seatBooked, Double totalFare,
+			User user, Flight flight) {
+		super();
+		this.bookingId = bookingId;
+		this.bookingNumber = bookingNumber;
+		this.bookingDate = bookingDate;
+		this.seatBooked = seatBooked;
+		this.totalFare = totalFare;
+		this.user = user;
+		this.flight = flight;
+	}
 	
 	
 }

@@ -1,4 +1,4 @@
-package com.booking.flight.controllers.test;
+package com.booking.flight.controller;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

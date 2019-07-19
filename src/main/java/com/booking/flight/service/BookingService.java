@@ -8,13 +8,13 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.booking.flight.entity.User;
-import com.booking.flight.model.PassengerModel;
+
 import com.booking.flight.entity.Booking;
 import com.booking.flight.entity.Flight;
 import com.booking.flight.entity.Passenger;
+import com.booking.flight.entity.User;
+import com.booking.flight.model.PassengerModel;
 import com.booking.flight.repository.BookingRepository;
-import com.booking.flight.repository.FlightRepository;
 import com.booking.flight.repository.PassengerRepository;
 import com.booking.flight.repository.UserRepository;
 import com.booking.flight.utils.FareUtils;
@@ -31,7 +31,7 @@ public class BookingService
 	@Autowired PassengerRepository passengerrepository;
 	
 	@Autowired
-	FlightRepository flightRepository;
+	FlightService flightService;
 	
 	@Autowired
 	UserRepository userRepository;
@@ -42,14 +42,14 @@ public class BookingService
 	@Autowired
 	FareUtils fareUtils;
 	
-	public Booking doFlightBooking(Long userId, Long fligtId ,  List<PassengerModel> passengers) throws FlightNotAvailableException, UserNotFoundException
+	public Booking doFlightBooking(Long userId, Long fligtId ,  List<PassengerModel> passengers) throws Exception
 	{
 		
 		Flight flight = null;
 		User user =  null;
 		Booking booked = null;
 		
-		Optional<Flight> flightOptional  =  flightRepository.findById(fligtId);
+		Optional<Flight> flightOptional  =  flightService.findById(fligtId);
 		boolean isFlightByAvailableSeats = false;
 
 		if(flightOptional.isPresent()) 
@@ -87,10 +87,14 @@ public class BookingService
 			booking.setSeatBooked(passengers.size());
 			booking.setTotalFare(totalFare);
 			booking.setPassengers(passengerList);
-			
 			booked=bookingrepository.save(booking);
 			
-			//createPassenger(passengerList, booked);
+			try {
+			flightService.updateFlightByNumberOfSeats(flight, passengers.size());
+			}catch(Exception ex) {
+				throw new Exception("Flight Entity not updated");
+			}
+			
 		}
 		else
 		{
