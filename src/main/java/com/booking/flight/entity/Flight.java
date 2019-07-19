@@ -41,7 +41,16 @@ public class Flight {
 
 	@Column(name = "FARE", nullable=false)
 	private Double fare;
+	
+	@Column(name = "STATUS", nullable=false)
+	private String status;
 
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
 	public Long getFlightId() {
 		return flightId;
 	}

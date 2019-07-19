@@ -14,16 +14,10 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
-import org.springframework.util.StringUtils;
-
 import com.booking.flight.entity.Flight;
 import com.booking.flight.model.FlightModel;
 import com.booking.flight.repository.FlightRepository;
-<<<<<<< HEAD
 import com.booking.flight.utils.ObjectUtility;
-=======
-import com.booking.flight.utils.OptionalUtils;
->>>>>>> 0eb7842b6c1b2097705b72614f7065770a3315f7
 import com.booking.flight.validation.FlightNotAvailableException;
 import com.booking.flight.validation.InvalidFlightDetailsException;
 

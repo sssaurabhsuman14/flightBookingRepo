@@ -3,6 +3,8 @@ package com.booking.flight.model;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+import javax.persistence.Column;
+
 
 public class FlightModel {
 
@@ -16,9 +18,16 @@ public class FlightModel {
 	private Integer fare;
 	private String flightSortBy;
 	private LocalDate flightDate;
+	private String status;
 
 
 	
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
 	public LocalDate getFlightDate() {
 		return flightDate;
 	}
