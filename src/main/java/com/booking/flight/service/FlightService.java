@@ -1,5 +1,6 @@
 package com.booking.flight.service;
 
+import java.sql.SQLException;
 import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -140,20 +141,27 @@ public class FlightService
 	public Optional<Flight> findById(Long fligtId) {
 		return flightRepository.findById(fligtId);
 }
-	public String requestToAddFlight(Flight flight, Long userId) throws InvalidFlightDetailsException
+	public String requestToAddFlight(FlightModel flightModel, Long userId) throws InvalidFlightDetailsException, SQLException
 	{
-		if(ObjectUtils.isEmpty(flight))
+		
+		
+		if(ObjectUtils.isEmpty(flightModel))
 		{
 			throw new InvalidFlightDetailsException("You Have Enter Wrong Flight Details ");
 		}
 		else
 		{
+			Flight flight = new Flight();
+			flight = (Flight) ObjectUtility.mappingObjects(flightModel, flight);
+			
 			Optional<Flight> flightByNymberOptional = flightRepository.findByFlightNumber(flight.getFlightNumber());
 			
 			Flight flightByNumber = (Flight) ObjectUtility.checkOptional(flightByNymberOptional);
 			
 			if(ObjectUtils.isEmpty(flightByNumber))
 			{
+				flight.setStatus("pending");
+				flightRepository.save(flight);
 				return "Waiting for Super Admin Approval..........."; 
 			}
 			else
@@ -161,7 +169,12 @@ public class FlightService
 				if(flightByNumber.getSource().equals(flight.getSource()) && flightByNumber.getDestination().equals(flight.getDestination()) && flightByNumber.getArrival().equals(flight.getArrival()) && flightByNumber.getDeparture().equals(flight.getDeparture()))
 					throw new InvalidFlightDetailsException("The Flight Already available for "+flight.getSource()+" -> "+flight.getDestination()+" "+flight.getDeparture()+" To "+flight.getArrival());
 				else
+				{
+					flight.setStatus("pending");
+					flightRepository.save(flight);
 					return "Waiting for Super Admin Approval...........";
+				}
+					
 			}
 		}
 

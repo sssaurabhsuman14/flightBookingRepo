@@ -1,5 +1,6 @@
 package com.booking.flight.controller;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,7 +37,6 @@ public class FlightController {
 	@Autowired
 	Validation validation;
 
-	private final static String ERR_MSG = " INVALID DATA, MISSING PARAMETER : ";
 
 	@PostMapping("/searchFlights")
 	public ResponseEntity<?> searchFlights(@RequestBody FlightModel model)
@@ -60,14 +60,14 @@ public class FlightController {
 
 
 	@PostMapping("/add")
-	public ResponseEntity<String> addFlight(@RequestParam(value="userId") Long userId, @RequestBody Flight flight) {
+	public ResponseEntity<String> addFlight(@RequestParam(value="userId") Long userId, @RequestBody FlightModel flightModel) throws SQLException {
 
 		try {
-			validation.validateAddFlightDetails(flight);
+			validation.validateAddFlightDetails(flightModel);
 
 			if(validation.validateUserRole(userId))
 			{
-				String requestToAddFlight = flightService.requestToAddFlight(flight, userId);
+				String requestToAddFlight = flightService.requestToAddFlight(flightModel, userId);
 
 				return new ResponseEntity<String>(requestToAddFlight, HttpStatus.OK);
 

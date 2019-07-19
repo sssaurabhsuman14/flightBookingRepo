@@ -15,13 +15,19 @@ public class FlightModel {
 	private LocalTime arrival;
 	private Integer totalSeats;
 	private Integer availableSeats;
-	private Integer fare;
+	private Double fare;
 	private String flightSortBy;
 	private LocalDate flightDate;
 	private String status;
 
 
 	
+	public Double getFare() {
+		return fare;
+	}
+	public void setFare(Double fare) {
+		this.fare = fare;
+	}
 	public String getStatus() {
 		return status;
 	}
@@ -76,12 +82,7 @@ public class FlightModel {
 	public void setAvailableSeats(Integer availableSeats) {
 		this.availableSeats = availableSeats;
 	}
-	public Integer getFare() {
-		return fare;
-	}
-	public void setFare(Integer fare) {
-		this.fare = fare;
-	}
+
 	public String getFlightSortBy() {
 		return flightSortBy;
 	}

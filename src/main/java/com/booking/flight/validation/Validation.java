@@ -58,47 +58,42 @@ public class Validation {
 		return false;
 	}
 
-	public void validateAddFlightDetails(Flight flight) throws InvalidFlightDetailsException {
+	public void validateAddFlightDetails(FlightModel flightModel) throws InvalidFlightDetailsException {
 
-		if (StringUtils.isEmpty(flight.getSource())) {
+		if (StringUtils.isEmpty(flightModel.getSource())) {
 			throw new InvalidFlightDetailsException(ERR_MSG+" SOURCE");
 		}
-		if (StringUtils.isEmpty(flight.getDestination())) {
+		if (StringUtils.isEmpty(flightModel.getDestination())) {
 			throw new InvalidFlightDetailsException(ERR_MSG+" DESTINATION");
 
 		}
 
-		if (StringUtils.isEmpty(flight.getAvailableSeats().toString())) {
+		if (StringUtils.isEmpty(flightModel.getAvailableSeats().toString())) {
 			throw new InvalidFlightDetailsException(ERR_MSG+" AVAILABLE SEATS");
 
 		}
 
-		if (StringUtils.isEmpty(flight.getArrival().toString())) {
+		if (StringUtils.isEmpty(flightModel.getArrival().toString())) {
 			throw new InvalidFlightDetailsException(ERR_MSG+" ARRIVAL");
 
 		}
 
-		if (StringUtils.isEmpty(flight.getDeparture().toString())) {
+		if (StringUtils.isEmpty(flightModel.getDeparture().toString())) {
 			throw new InvalidFlightDetailsException(ERR_MSG+" DEPARTURE");
 
 		}
 
-		if (StringUtils.isEmpty(flight.getFare().toString())) {
+		if (StringUtils.isEmpty(flightModel.getFare().toString())) {
 			throw new InvalidFlightDetailsException(ERR_MSG+" FARE");
 
 		}
 
-		if (StringUtils.isEmpty(flight.getFlightId().toString())) {
-			throw new InvalidFlightDetailsException(ERR_MSG+" FLIGHT ID");
-
-		}
-
-		if (StringUtils.isEmpty(flight.getFlightNumber().toString())) {
+		if (StringUtils.isEmpty(flightModel.getFlightNumber().toString())) {
 			throw new InvalidFlightDetailsException(ERR_MSG+" FLIGHT NUMBER");
 
 		}
 
-		if (StringUtils.isEmpty(flight.getTotalSeats().toString())) {
+		if (StringUtils.isEmpty(flightModel.getTotalSeats().toString())) {
 			throw new InvalidFlightDetailsException(ERR_MSG+" TOTAL SEATS");
 		}
 	}
