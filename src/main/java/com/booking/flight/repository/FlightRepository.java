@@ -25,5 +25,7 @@ public interface FlightRepository extends JpaRepository<Flight, Long>{
 	
 	public Optional<List<Flight>> findBySource(String source);
 	
+	public Optional<Flight> findByFlightNumber(Integer flightNumber);
+	
 	
 }
