@@ -13,12 +13,15 @@ import java.util.Optional;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
 import com.booking.flight.entity.Flight;
 import com.booking.flight.model.FlightModel;
 import com.booking.flight.repository.FlightRepository;
+import com.booking.flight.utils.OptionalUtils;
 import com.booking.flight.validation.FlightNotAvailableException;
+import com.booking.flight.validation.InvalidFlightDetailsException;
 
 @Service
 public class FlightService
@@ -135,4 +138,36 @@ public class FlightService
 		
 		return false;
 	}
+	
+	public String requestToAddFlight(Flight flight, Long userId) throws InvalidFlightDetailsException
+	{
+		if(ObjectUtils.isEmpty(flight))
+		{
+			throw new InvalidFlightDetailsException("You Have Enter Wrong Flight Details ");
+		}
+		else
+		{
+			Optional<Flight> flightByNymberOptional = flightRepository.findByFlightNumber(flight.getFlightNumber());
+			
+			Flight flightByNumber = (Flight) OptionalUtils.checkOptional(flightByNymberOptional);
+			
+			if(ObjectUtils.isEmpty(flightByNumber))
+			{
+				return "Waiting for Super Admin Approval..........."; 
+			}
+			else
+			{
+				if(flightByNumber.getSource().equals(flight.getSource()) && flightByNumber.getDestination().equals(flight.getDestination()) && flightByNumber.getArrival().equals(flight.getArrival()) && flightByNumber.getDeparture().equals(flight.getDeparture()))
+					throw new InvalidFlightDetailsException("The Flight Already available for "+flight.getSource()+" -> "+flight.getDestination()+" "+flight.getDeparture()+" To "+flight.getArrival());
+				else
+					return "Waiting for Super Admin Approval...........";
+			}
+		}
+
+	}
 }
+
+
+
+
+
